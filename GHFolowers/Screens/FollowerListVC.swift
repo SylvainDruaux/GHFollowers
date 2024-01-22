@@ -24,6 +24,17 @@ class FollowerListVC: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Follower>!
 
+    init(username: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.username = username
+        title = username
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
@@ -128,18 +139,6 @@ class FollowerListVC: UIViewController {
                 presentGFAlertOnMainThread(title: "Bad stuff Happened", message: error.rawValue, buttonTitle: "Ok")
             }
         }
-
-        /* old way before swift 5
-         NetworkManager.shared.getFollowers(for: userName, page: 1) { followers, errorMessage in
-             guard let followers else {
-                 self.presentGFAlertOnMainThread(title: "Bad stuff Happened", message: errorMessage!.rawValue, buttonTitle: "Ok")
-                 return
-             }
-
-             print("Followers.count = \(followers.count)")
-             print(followers)
-         }
-         */
     }
 }
 
