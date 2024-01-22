@@ -20,6 +20,7 @@ class FollowerListVC: GFDataLoadingVC {
     private var page: Int = 1
     private var hasMoreFollowers = true
     private var isSearching = false
+    private var isLoadingMoreFollowers = false
 
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Follower>!
@@ -67,7 +68,6 @@ class FollowerListVC: GFDataLoadingVC {
     func configureSearchController() {
         let searchController = UISearchController()
         searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search for username"
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -118,6 +118,7 @@ class FollowerListVC: GFDataLoadingVC {
 
     func getFollowers(username: String, page: Int) {
         showLoadingView()
+        isLoadingMoreFollowers = true
         NetworkManager.shared.getFollowers(for: username, page: page) { [weak self] result in
             guard let self else { return }
             dismissLoadingView()
@@ -129,8 +130,13 @@ class FollowerListVC: GFDataLoadingVC {
 
                 if self.followers.isEmpty {
                     let message = "This user doesn't have any followers. Go follow them 😀"
-                    DispatchQueue.main.async { self.showEmptyStateView(with: message, in: self.view) }
+                    DispatchQueue.main.async {
+                        self.navigationItem.searchController?.searchBar.isHidden = true
+                        self.showEmptyStateView(with: message, in: self.view)
+                    }
                     return
+                } else {
+                    DispatchQueue.main.async { self.navigationItem.searchController?.searchBar.isHidden = false }
                 }
 
                 updateData(on: self.followers)
@@ -138,19 +144,20 @@ class FollowerListVC: GFDataLoadingVC {
             case .failure(let error):
                 presentGFAlertOnMainThread(title: "Bad stuff Happened", message: error.rawValue, buttonTitle: "Ok")
             }
+
+            isLoadingMoreFollowers = false
         }
     }
 }
 
 extension FollowerListVC: UICollectionViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard hasMoreFollowers else { return }
-
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
 
         if offsetY > contentHeight - height {
+            guard hasMoreFollowers, !isLoadingMoreFollowers else { return }
             page += 1
             getFollowers(username: username, page: page)
         }
@@ -168,17 +175,17 @@ extension FollowerListVC: UICollectionViewDelegate {
     }
 }
 
-extension FollowerListVC: UISearchResultsUpdating, UISearchBarDelegate {
+extension FollowerListVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let filter = searchController.searchBar.text, !filter.isEmpty else { return }
+        guard let filter = searchController.searchBar.text, !filter.isEmpty else {
+            filteredFollowers.removeAll()
+            updateData(on: followers)
+            isSearching = false
+            return
+        }
         isSearching = true
         filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
         updateData(on: filteredFollowers)
-    }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        isSearching = false
-        updateData(on: followers)
     }
 }
 
@@ -189,7 +196,7 @@ extension FollowerListVC: FollowerListVCDelegate {
         page = 1
         followers.removeAll()
         filteredFollowers.removeAll()
-        collectionView.setContentOffset(.zero, animated: true)
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
         getFollowers(username: username, page: page)
     }
 }
