@@ -1,0 +1,31 @@
+# General Options
+--swiftversion 5.9
+
+# File Options
+--exclude Stage,Tasks/.build,ThirdParty,Pods,**/Sourcery/*,**.generated.swift
+
+# Format Options
+--binarygrouping none
+--exponentcase lowercase
+--header ignore
+--hexgrouping none
+--hexliteralcase lowercase
+--ifdef no-indent
+--indent 4
+# make sure this matches .swiftlint
+--maxwidth 180
+--nospaceoperators ..<,...
+--octalgrouping none
+--selfrequired
+--stripunusedargs closure-only
+--trailingclosures
+--wraparguments before-first
+--wrapcollections before-first
+--wrapparameters before-first
+
+# Rules
+--disable hoistAwait
+--disable hoistPatternLet
+--disable hoistTry
+--disable wrapMultilineStatementBraces
+--disable extensionAccessControl
