@@ -8,16 +8,16 @@
 import UIKit
 
 class GFAlertVC: UIViewController {
-    let containerView = GFAlertContainerView()
-    let titleLabel = GFTitleLabel(textAlignment: .center, fontSize: 20)
-    let messageLabel = GFBodyLabel(textAlignment: .center)
-    let actionButton = GFButton(backgroundColor: .systemPink, title: "Ok")
+    private let containerView = GFAlertContainerView()
+    private let titleLabel = GFTitleLabel(textAlignment: .center, fontSize: 20)
+    private let messageLabel = GFBodyLabel(textAlignment: .center)
+    private let actionButton = GFButton(backgroundColor: .systemPink, title: "Ok")
 
     var alertTitle: String?
     var message: String?
     var buttonTitle: String?
 
-    let padding: CGFloat = 20
+    private let padding: CGFloat = 20
 
     init(alertTitle: String? = nil, message: String? = nil, buttonTitle: String? = nil) {
         super.init(nibName: nil, bundle: nil)
@@ -85,7 +85,7 @@ class GFAlertVC: UIViewController {
         ])
     }
 
-    @objc func dismissVC() {
+    @objc private func dismissVC() {
         dismiss(animated: true)
     }
 }

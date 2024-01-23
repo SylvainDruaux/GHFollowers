@@ -13,7 +13,7 @@ protocol ItemInfoVCDelegate: AnyObject {
 }
 
 class GFItemInfoVC: UIViewController {
-    let stackView = UIStackView()
+    private let stackView = UIStackView()
     let itemInfoViewOne = GFItemInfoView()
     let itemInfoViewTwo = GFItemInfoView()
     let actionButton = GFButton()
@@ -38,7 +38,7 @@ class GFItemInfoVC: UIViewController {
         configureActionButton()
     }
 
-    func configureBackgroundView() {
+    private func configureBackgroundView() {
         view.layer.cornerRadius = 18
         view.backgroundColor = .secondarySystemBackground
     }

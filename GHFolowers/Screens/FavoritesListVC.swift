@@ -8,8 +8,8 @@
 import UIKit
 
 class FavoritesListVC: GFDataLoadingVC {
-    let tableView = UITableView()
-    var favorites: [Follower] = []
+    private let tableView = UITableView()
+    private var favorites: [Follower] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,13 +22,13 @@ class FavoritesListVC: GFDataLoadingVC {
         getFavorites()
     }
 
-    func configureViewController() {
+    private func configureViewController() {
         view.backgroundColor = .systemBackground
         title = "Favorites"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
 
-    func configureTableView() {
+    private func configureTableView() {
         view.addSubview(tableView)
         tableView.frame = view.bounds
         tableView.rowHeight = 80
@@ -37,7 +37,7 @@ class FavoritesListVC: GFDataLoadingVC {
         tableView.register(FavoriteCell.self, forCellReuseIdentifier: FavoriteCell.reuseID)
     }
 
-    func getFavorites() {
+    private func getFavorites() {
         PersistenceManager.retrieveFavorites { [weak self] result in
             guard let self else { return }
 
@@ -83,12 +83,13 @@ extension FavoritesListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
 
-        let favorite = favorites[indexPath.row]
-        favorites.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .left)
-
-        PersistenceManager.updateWith(favorite: favorite, actionType: .remove) { [weak self] error in
-            guard let self, let error else { return }
+        PersistenceManager.updateWith(favorite: favorites[indexPath.row], actionType: .remove) { [weak self] error in
+            guard let self else { return }
+            guard let error else {
+                favorites.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .left)
+                return
+            }
             presentGFAlertOnMainThread(title: "Unable to remove", message: error.rawValue, buttonTitle: "Ok")
         }
     }

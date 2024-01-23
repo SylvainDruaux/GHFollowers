@@ -12,11 +12,11 @@ protocol UserInfoVCDelegate: AnyObject {
 }
 
 class UserInfoVC: UIViewController {
-    let headerView = UIView()
-    let itemViewOne = UIView()
-    let itemViewTwo = UIView()
-    let dateLabel = GFBodyLabel(textAlignment: .center)
-    var itemViews: [UIView] = []
+    private let headerView = UIView()
+    private let itemViewOne = UIView()
+    private let itemViewTwo = UIView()
+    private let dateLabel = GFBodyLabel(textAlignment: .center)
+    private var itemViews: [UIView] = []
 
     var username: String!
     weak var delegate: UserInfoVCDelegate!
@@ -28,13 +28,13 @@ class UserInfoVC: UIViewController {
         getUserInfo()
     }
 
-    func configureViewController() {
+    private func configureViewController() {
         view.backgroundColor = .systemBackground
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
         navigationItem.rightBarButtonItem = doneButton
     }
 
-    func getUserInfo() {
+    private func getUserInfo() {
         NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
             guard let self else { return }
 
@@ -47,14 +47,14 @@ class UserInfoVC: UIViewController {
         }
     }
 
-    func configureUIElements(with user: User) {
+    private func configureUIElements(with user: User) {
         add(childVC: GFUserInfoHeaderVC(user: user), to: headerView)
         add(childVC: GFRepoItemVC(user: user, delegate: self), to: itemViewOne)
         add(childVC: GFFollowerItemVC(user: user, delegate: self), to: itemViewTwo)
         dateLabel.text = "GitHub since \(user.createdAt.convertToMonthYearFormat())"
     }
 
-    func layoutUI() {
+    private func layoutUI() {
         let padding: CGFloat = 20
         let itemHeight: CGFloat = 140
 
@@ -85,7 +85,7 @@ class UserInfoVC: UIViewController {
         ])
     }
 
-    func add(childVC: UIViewController, to containerVview: UIView) {
+    private func add(childVC: UIViewController, to containerVview: UIView) {
         addChild(childVC)
         containerVview.addSubview(childVC.view)
         childVC.view.frame = containerVview.bounds

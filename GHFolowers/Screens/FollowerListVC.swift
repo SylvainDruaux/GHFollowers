@@ -10,7 +10,7 @@ import UIKit
 class FollowerListVC: GFDataLoadingVC {
     enum Section { case main }
 
-    var username: String!
+    private var username: String!
     private var followers: [Follower] = []
     private var filteredFollowers: [Follower] = []
     private var page: Int = 1
@@ -46,14 +46,14 @@ class FollowerListVC: GFDataLoadingVC {
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
-    func configureViewController() {
+    private func configureViewController() {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         navigationItem.rightBarButtonItem = addButton
     }
 
-    func configureCollectionView() {
+    private func configureCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createThreeColumnLayout(in: view))
         view.addSubview(collectionView)
         collectionView.delegate = self
@@ -61,7 +61,7 @@ class FollowerListVC: GFDataLoadingVC {
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseID)
     }
 
-    func configureSearchController() {
+    private func configureSearchController() {
         let searchController = UISearchController()
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Search for username"
@@ -69,7 +69,7 @@ class FollowerListVC: GFDataLoadingVC {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
 
-    func configureDataSource() {
+    private func configureDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, Follower>(collectionView: collectionView) { collectionView, indexPath, follower in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FollowerCell.reuseID, for: indexPath) as? FollowerCell else {
                 return UICollectionViewCell()
@@ -79,14 +79,14 @@ class FollowerListVC: GFDataLoadingVC {
         }
     }
 
-    func updateData(on followers: [Follower]) {
+    private func updateData(on followers: [Follower]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()
         snapshot.appendSections([.main])
         snapshot.appendItems(followers)
         DispatchQueue.main.async { self.dataSource.apply(snapshot, animatingDifferences: true) }
     }
 
-    @objc func addButtonTapped() {
+    @objc private func addButtonTapped() {
         showLoadingView()
 
         NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
@@ -112,7 +112,7 @@ class FollowerListVC: GFDataLoadingVC {
         }
     }
 
-    func getFollowers(username: String, page: Int) {
+    private func getFollowers(username: String, page: Int) {
         showLoadingView()
         isLoadingMoreFollowers = true
         NetworkManager.shared.getFollowers(for: username, page: page) { [weak self] result in
