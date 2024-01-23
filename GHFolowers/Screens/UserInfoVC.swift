@@ -14,7 +14,7 @@ protocol UserInfoVCDelegate: AnyObject {
 class UserInfoVC: UIViewController {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
-    
+
     private let headerView = UIView()
     private let itemViewOne = UIView()
     private let itemViewTwo = UIView()
@@ -37,16 +37,16 @@ class UserInfoVC: UIViewController {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
         navigationItem.rightBarButtonItem = doneButton
     }
-    
+
     private func configureScrollView() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         scrollView.pinToEdges(of: view)
         contentView.pinToEdges(of: scrollView)
-        
+
         NSLayoutConstraint.activate([
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            contentView.heightAnchor.constraint(equalToConstant: 610)
+            contentView.heightAnchor.constraint(equalToConstant: 610),
         ])
     }
 
