@@ -90,3 +90,7 @@ class GFAlertVC: UIViewController {
         dismiss(animated: true)
     }
 }
+
+#Preview {
+    GFAlertVC()
+}

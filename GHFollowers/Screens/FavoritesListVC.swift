@@ -22,6 +22,20 @@ class FavoritesListVC: GFDataLoadingVC {
         getFavorites()
     }
 
+    override func updateContentUnavailableConfiguration(using state: UIContentUnavailableConfigurationState) {
+        if favorites.isEmpty {
+            var config = UIContentUnavailableConfiguration.empty()
+            config.image = Images.emptyStateLogo
+            config.imageProperties.maximumSize.height = 100
+            config.imageProperties.maximumSize.width = 100
+            config.text = "No favorite?"
+            config.secondaryText = "Add one on the follower screen."
+            contentUnavailableConfiguration = config
+        } else {
+            contentUnavailableConfiguration = nil
+        }
+    }
+
     private func configureViewController() {
         view.backgroundColor = .systemBackground
         title = "Favorites"
@@ -54,13 +68,9 @@ class FavoritesListVC: GFDataLoadingVC {
     }
 
     private func updateUI(with favorites: [Follower]) {
-        guard !favorites.isEmpty else {
-            showEmptyStateView(with: "No favorite?\nAdd one on the follower screen.", in: view)
-            return
-        }
-
         DispatchQueue.main.async {
             self.favorites = favorites
+            self.setNeedsUpdateContentUnavailableConfiguration()
             self.tableView.reloadData()
             self.view.bringSubviewToFront(self.tableView)
         }
@@ -96,7 +106,7 @@ extension FavoritesListVC: UITableViewDelegate, UITableViewDataSource {
             guard let error else {
                 favorites.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .left)
-                if favorites.isEmpty { showEmptyStateView(with: "No favorite?\nAdd one on the follower screen.", in: view) }
+                setNeedsUpdateContentUnavailableConfiguration()
                 return
             }
             DispatchQueue.main.async {
@@ -104,4 +114,8 @@ extension FavoritesListVC: UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
+}
+
+#Preview {
+    FavoritesListVC()
 }

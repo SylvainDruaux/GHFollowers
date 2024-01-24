@@ -32,5 +32,5 @@ struct FollowerView: View {
 }
 
 #Preview {
-    FollowerView(follower: Follower(login: "SeanAllen", avatarUrl: ""))
+    FollowerView(follower: Follower(login: "SylvainDruaux", avatarUrl: ""))
 }

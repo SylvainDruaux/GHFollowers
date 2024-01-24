@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E40DE64F2B5BEA6800CCF103 /* GFEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40DE64E2B5BEA6800CCF103 /* GFEmptyStateView.swift */; };
 		E40DE6512B5BF5F200CCF103 /* UserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40DE6502B5BF5F200CCF103 /* UserInfoVC.swift */; };
 		E40DE6532B5BFF1B00CCF103 /* GFUserInfoHeaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40DE6522B5BFF1B00CCF103 /* GFUserInfoHeaderVC.swift */; };
 		E40DE6552B5BFF8600CCF103 /* GFSecondaryTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40DE6542B5BFF8600CCF103 /* GFSecondaryTitleLabel.swift */; };
@@ -47,7 +46,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E40DE64E2B5BEA6800CCF103 /* GFEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFEmptyStateView.swift; sourceTree = "<group>"; };
 		E40DE6502B5BF5F200CCF103 /* UserInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoVC.swift; sourceTree = "<group>"; };
 		E40DE6522B5BFF1B00CCF103 /* GFUserInfoHeaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFUserInfoHeaderVC.swift; sourceTree = "<group>"; };
 		E40DE6542B5BFF8600CCF103 /* GFSecondaryTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFSecondaryTitleLabel.swift; sourceTree = "<group>"; };
@@ -102,7 +100,6 @@
 		E40DE6482B5BE9CF00CCF103 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E40DE64E2B5BEA6800CCF103 /* GFEmptyStateView.swift */,
 				E40DE6582B5C10BD00CCF103 /* GFItemInfoView.swift */,
 				E47934802B5E88BA003618D4 /* GFAlertContainerView.swift */,
 			);
@@ -416,7 +413,6 @@
 				E40DE6622B5C3E9100CCF103 /* Date+Ext.swift in Sources */,
 				E486A78D2B5D6C02003E2E04 /* PersistenceManager.swift in Sources */,
 				E40DE6552B5BFF8600CCF103 /* GFSecondaryTitleLabel.swift in Sources */,
-				E40DE64F2B5BEA6800CCF103 /* GFEmptyStateView.swift in Sources */,
 				E49824A62B61441C005666A0 /* FollowerView.swift in Sources */,
 				E43F94672A94F0C3009F5515 /* NetworkManager.swift in Sources */,
 				E43F94532A94C7E9009F5515 /* FollowerListVC.swift in Sources */,
@@ -491,7 +487,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -545,7 +541,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -569,7 +565,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -597,7 +593,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

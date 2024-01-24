@@ -25,7 +25,7 @@ class GFButton: UIButton {
 
     private func configure() {
         configuration = .tinted()
-        configuration?.cornerStyle = .medium
+        configuration?.cornerStyle = .large
         translatesAutoresizingMaskIntoConstraints = false
     }
 
@@ -38,4 +38,8 @@ class GFButton: UIButton {
         configuration?.imagePadding = 6
         configuration?.imagePlacement = .leading
     }
+}
+
+#Preview {
+    GFButton(color: .blue, title: "Test", systemImage: UIImage(systemName: "pencil"))
 }

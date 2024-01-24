@@ -45,3 +45,7 @@ class FavoriteCell: UITableViewCell {
         ])
     }
 }
+
+#Preview {
+    FavoriteCell()
+}
