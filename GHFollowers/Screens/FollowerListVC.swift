@@ -89,16 +89,15 @@ class FollowerListVC: GFDataLoadingVC {
     @objc private func addButtonTapped() {
         showLoadingView()
 
-        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
-            guard let self else { return }
-            dismissLoadingView()
-
-            switch result {
-            case .success(let user):
+        Task {
+            do {
+                let user = try await NetworkManager.shared.getUserInfo(for: username)
                 addUserToFavorites(user: user)
-
-            case .failure(let error):
-                presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
+                dismissLoadingView()
+            } catch {
+                let errorDescription = (error as? GFError)?.rawValue ?? DefaultAlert.message
+                presentGFAlert(title: "Something went wrong", message: errorDescription, buttonTitle: "Ok")
+                dismissLoadingView()
             }
         }
     }
@@ -108,30 +107,33 @@ class FollowerListVC: GFDataLoadingVC {
         PersistenceManager.updateWith(favorite: favorite, actionType: .add) { [weak self] error in
             guard let self else { return }
             guard let error else {
-                presentGFAlertOnMainThread(title: "Success!", message: "You have successfully favorited this user 🥳", buttonTitle: "Hooray!")
+                DispatchQueue.main.async {
+                    self.presentGFAlert(title: "Success!", message: "You have successfully favorited this user 🥳", buttonTitle: "Hooray!")
+                }
                 return
             }
-
-            presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
+            DispatchQueue.main.async {
+                self.presentGFAlert(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
+            }
         }
     }
 
     private func getFollowers(username: String, page: Int) {
         showLoadingView()
         isLoadingMoreFollowers = true
-        NetworkManager.shared.getFollowers(for: username, page: page) { [weak self] result in
-            guard let self else { return }
-            dismissLoadingView()
 
-            switch result {
-            case .success(let followers):
+        Task {
+            do {
+                let followers = try await NetworkManager.shared.getFollowers(for: username, page: page)
                 updateUI(with: followers)
-
-            case .failure(let error):
-                presentGFAlertOnMainThread(title: "Bad stuff Happened", message: error.rawValue, buttonTitle: "Ok")
+                dismissLoadingView()
+                isLoadingMoreFollowers = false
+            } catch {
+                let errorDescription = (error as? GFError)?.rawValue ?? DefaultAlert.message
+                presentGFAlert(title: "Bad stuff Happened", message: errorDescription, buttonTitle: "Ok")
+                dismissLoadingView()
+                isLoadingMoreFollowers = false
             }
-
-            isLoadingMoreFollowers = false
         }
     }
 

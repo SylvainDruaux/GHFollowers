@@ -13,6 +13,9 @@ enum SFSymbols {
     static let gists = UIImage(systemName: "text.alignleft")
     static let followers = UIImage(systemName: "heart")
     static let following = UIImage(systemName: "person.2")
+    static let checkmark = UIImage(systemName: "checkmark.circle")
+    static let person = UIImage(systemName: "person")
+    static let person3 = UIImage(systemName: "person.3")
 }
 
 enum Images {
@@ -45,4 +48,8 @@ enum DeviceTypes {
     static func isiPhoneXAspectRatio() -> Bool {
         isiPhoneX || isiPhoneXsMaxAndXr
     }
+}
+
+enum DefaultAlert {
+    static let message = "We were unable to complete your task at that time. Please try again."
 }
