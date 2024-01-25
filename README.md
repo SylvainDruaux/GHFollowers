@@ -34,7 +34,7 @@ GHFollowers provides you with the followers of any GitHub account along with add
 
 ## Technologies Used
 
-* UX/UI: UIKit, fully programmatically (R.I.P. storybaord), and a touch of SwiftUI.
+* UX/UI: UIKit, fully programmatically (R.I.P. storyboard), and a touch of SwiftUI.
 * Asynchronous Operations: Concurrency (async/await).
 * Persistent Storage and Caching: UserDefaults and NSCache.
 
