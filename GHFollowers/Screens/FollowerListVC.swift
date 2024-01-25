@@ -157,7 +157,13 @@ class FollowerListVC: GFDataLoadingVC {
         if followers.count < 100 { hasMoreFollowers = false }
         self.followers.append(contentsOf: followers)
         updateData(on: self.followers)
+        resetSearchBar()
         setNeedsUpdateContentUnavailableConfiguration()
+    }
+
+    private func resetSearchBar() {
+        navigationItem.searchController?.searchBar.text = ""
+        navigationItem.searchController?.isActive = false
     }
 }
 
@@ -192,6 +198,7 @@ extension FollowerListVC: UISearchResultsUpdating {
             filteredFollowers.removeAll()
             updateData(on: followers)
             isSearching = false
+            setNeedsUpdateContentUnavailableConfiguration()
             return
         }
         isSearching = true
@@ -209,7 +216,7 @@ extension FollowerListVC: UserInfoVCDelegate {
 
         followers.removeAll()
         filteredFollowers.removeAll()
-        navigationItem.searchController?.searchBar.text = ""
+        resetSearchBar()
         collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
         getFollowers(username: username, page: page)
     }
